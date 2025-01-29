@@ -7,10 +7,12 @@
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
 
-// Sets default values
+/**
+	 * Sets default values for this actor's properties
+	 */
 ACoin::ACoin()
 {
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame. You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	this->Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
@@ -21,7 +23,9 @@ ACoin::ACoin()
 	SetRootComponent(this->Mesh);
 }
 
-// Called when the game starts or when spawned
+/**
+* Called when the game starts or when spawned
+*/
 void ACoin::BeginPlay()
 {
 	Super::BeginPlay();
@@ -30,6 +34,9 @@ void ACoin::BeginPlay()
 	TargetPosition = GetActorLocation() + DeltaMovement;
 }
 
+/**
+ * Function called every time an actor overlaps the coin
+ */
 void ACoin::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
                            int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
@@ -45,7 +52,10 @@ void ACoin::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 	}
 }
 
-// Called every frame
+/**
+ * Called every frame
+ * @param DeltaTime How much time in seconds it takes to render a single frame
+ */
 void ACoin::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
