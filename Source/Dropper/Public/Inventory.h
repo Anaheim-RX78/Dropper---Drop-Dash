@@ -72,7 +72,7 @@ public:
 	 * @param Amount Quantity of items to be removed
 	 * @param Location Location to be placed the dropped items
 	 */
-	void DropItem(UItemData* Item, int Amount, FVector Location);
+	void DropItem(const UItemData* Item, int Amount, const FVector& Location) const;
 
 	/**
 	 * Remove an item from the inventory
@@ -80,7 +80,7 @@ public:
 	 * @param Amount Quantity of items to be removed
 	 * @param Location Location to be placed the dropped items
 	 */
-	void DropItem(int Index, int Amount, FVector Location);
+	void DropItem(int Index, int Amount, const FVector& Location);
 
 	/**
 	 * Get the single inventory slot based on the item data

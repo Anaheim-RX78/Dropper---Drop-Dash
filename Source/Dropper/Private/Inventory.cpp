@@ -28,10 +28,12 @@ void UInventory::BeginPlay()
  */
 void UInventory::AddItem(UItemData* Item, const int Amount)
 {
+	// Find the slot for the given item in the inventory and increase di amount.
 	if (FSlot* SlotPtr = GetSlotByData(Item))
 	{
 		SlotPtr->Amount += Amount;
 	}
+	// If no slot is found, create one and add it into the inventory.
 	else
 	{
 		FSlot Slot;
@@ -46,8 +48,13 @@ void UInventory::AddItem(UItemData* Item, const int Amount)
  * @param Item Item
  * @param Amount Quantity of items to be added
  */
-void UInventory::AddItem(AItemActor* Item, int Amount)
+void UInventory::AddItem(AItemActor* Item, const int Amount)
 {
+	// Add the item into the inventory
+	AddItem(Item->Data, Amount);
+
+	// Destroy the spawned item
+	Item->Destroy();
 }
 
 /**
@@ -56,8 +63,13 @@ void UInventory::AddItem(AItemActor* Item, int Amount)
  * @param Amount Quantity of items to be removed
  * @param Location Location to be placed the dropped items
  */
-void UInventory::DropItem(UItemData* Item, int Amount, FVector Location)
+void UInventory::DropItem(const UItemData* Item, const int Amount, const FVector& Location) const
 {
+	for (int i = 0; i < Amount; i++)
+	{
+		// For each item in the inventory, spawn it in the defined location.
+		GetWorld()->SpawnActor<AItemActor>(Item->Item, Location, FRotator::ZeroRotator);
+	}
 }
 
 /**
@@ -66,8 +78,10 @@ void UInventory::DropItem(UItemData* Item, int Amount, FVector Location)
  * @param Amount Quantity of items to be removed
  * @param Location Location to be placed the dropped items
  */
-void UInventory::DropItem(int Index, int Amount, FVector Location)
+void UInventory::DropItem(const int Index, const int Amount, const FVector& Location)
 {
+	// Drop the item based on the slot index
+	DropItem(Slots[Index].Data, Amount, Location);
 }
 
 /**
@@ -77,6 +91,7 @@ void UInventory::DropItem(int Index, int Amount, FVector Location)
  */
 FSlot* UInventory::GetSlotByData(const UItemData* Item)
 {
+	// Loop through the inventory slots, if the slot contains the item, return the slot.
 	for (FSlot& Slot : Slots)
 	{
 		if (Slot.Data == Item)
