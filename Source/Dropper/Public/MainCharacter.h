@@ -1,10 +1,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Inventory.h"
+#include "PlayerInteractionComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Dropper/DropperCharacter.h"
 #include "GameFramework/Character.h"
-#include "GameFramework/SpringArmComponent.h"
 #include "MainCharacter.generated.h"
 
 /**
@@ -30,14 +31,6 @@ public:
 
 protected:
 	/**
-	 * @brief Mapper for every input action.
-	 *
-	 * This property holds a reference to the input mapping context that maps input actions to the character's movements.
-	 */
-	UPROPERTY(EditAnywhere, Category=Movement)
-	UInputMappingContext* DefaultMappingContext;
-
-	/**
 	 * @brief Custom speed, default 100.
 	 *
 	 * This property defines the movement speed of the character.
@@ -45,33 +38,6 @@ protected:
 	 */
 	UPROPERTY(EditAnywhere, Category=Movement)
 	float Speed = 100.0f;
-
-	/**
-	 * @brief Jump Input Action.
-	 *
-	 * This property holds a reference to the input action used for jumping.
-	 * It allows the character to perform a jump when the action is triggered.
-	 */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	UInputAction* JumpAction;
-
-	/**
-	 * @brief Move Input Action.
-	 *
-	 * This property holds a reference to the input action used for moving the character.
-	 * It allows the character to move based on player input.
-	 */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	UInputAction* MoveAction;
-
-	/**
-	 * @brief Look Input Action.
-	 *
-	 * This property holds a reference to the input action used for looking around.
-	 * It allows the character to change its view direction based on player input.
-	 */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	UInputAction* LookAction;
 
 	/**
 	 * @brief Camera component, needed to have a visualization attached to the character.
@@ -91,9 +57,16 @@ protected:
 	UPROPERTY(EditAnywhere, Category=Camera)
 	USpringArmComponent* SpringArm;
 
-	// TODO: Add inventory
-
-	// TODO: Add player interaction component
+	/**
+	 * @brief Interaction component for handling player interactions.
+	 *
+	 * This property holds a reference to the player interaction component
+	 * attached to the character.
+	 * It provides functionality to detect and
+	 * handle interactions with interactable objects in the game world.
+	 */
+	UPROPERTY(EditAnywhere, Category=Interaction)
+	UPlayerInteractionComponent* InteractionComponent;
 
 	/**
 	 * @brief Called when the game starts or when spawned.
@@ -104,27 +77,27 @@ protected:
 	 */
 	virtual void BeginPlay() override;
 
-	/**
-	 * @brief Called for movement input.
-	 *
-	 * This function is called to handle movement input from the player.
-	 * It updates the character's position based on the input value.
-	 *
-	 * @param Value The input value for movement.
-	 */
-	void Move(const FInputActionValue& Value);
-
-	/**
-	 * @brief Called for looking input.
-	 *
-	 * This function is called to handle looking input from the player.
-	 * It updates the character's view direction based on the input value.
-	 *
-	 * @param Value The input value for looking.
-	 */
-	void Look(const FInputActionValue& Value);
-
 public:
+	/**
+	 * @brief Inventory component for managing the character's items.
+	 *
+	 * This property holds a reference to the inventory component attached to the character.
+	 * It provides functionality to add, remove, and manage items within the character's inventory.
+	 */
+	UPROPERTY(EditAnywhere, Category=Inventory)
+	UInventory* Inventory;
+
+	/**
+	 * @brief Gets the interaction component.
+	 *
+	 * This function returns a pointer to the player interaction component attached to the character.
+	 * It provides access to the interaction component
+	 * for handling interactions with interactable objects in the game world.
+	 *
+	 * @return A pointer to the player interaction component.
+	 */
+	UPlayerInteractionComponent* GetInteractionComponent() const { return InteractionComponent; }
+
 	/**
 	 * @brief Called every frame.
 	 *
@@ -144,4 +117,24 @@ public:
 	 * @param PlayerInputComponent The input component to bind functionality to.
 	 */
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
+
+	/**
+	 * @brief Called for movement input.
+	 *
+	 * This function is called to handle movement input from the player.
+	 * It updates the character's position based on the input value.
+	 *
+	 * @param Value The input value for movement.
+	 */
+	void SetupMovementInput(const FVector2D& Value);
+
+	/**
+	 * @brief Called for looking input.
+	 *
+	 * This function is called to handle looking input from the player.
+	 * It updates the character's view direction based on the input value.
+	 *
+	 * @param Value The input value for looking.
+	 */
+	void SetupLookInput(const FVector2D& Value);
 };
