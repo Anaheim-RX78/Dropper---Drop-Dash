@@ -1,37 +1,36 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "MainCharacter.h"
 
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 
 class UEnhancedInputLocalPlayerSubsystem;
-// Sets default values
+
 AMainCharacter::AMainCharacter()
 {
-	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	// Set this character to call Tick() every frame. You can turn this off to improve performance if you don't need it.
+	this->PrimaryActorTick.bCanEverTick = true;
 
-	SpringArm = CreateDefaultSubobject<USpringArmComponent>("Spring Arm");
-	SpringArm->SetupAttachment(RootComponent);
-	SpringArm->TargetArmLength = 500.0f;
-	SpringArm->bUsePawnControlRotation = true;
+	// Create a SpringArmComponent and attach it to the object
+	this->SpringArm = CreateDefaultSubobject<USpringArmComponent>("Spring Arm");
+	this->SpringArm->SetupAttachment(RootComponent);
+	this->SpringArm->TargetArmLength = 500.0f;
+	this->SpringArm->bUsePawnControlRotation = true;
 
-	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
-	Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
+	// Create a camera component and attach it to the spring arm.
+	this->Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
+	this->Camera->SetupAttachment(this->SpringArm, USpringArmComponent::SocketName);
 }
 
-// Called when the game starts or when spawned
 void AMainCharacter::BeginPlay()
 {
-	Super::BeginPlay();
+	this->Super::BeginPlay();
 
 	//Add Input Mapping Context
-	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
+	const APlayerController* PlayerController = Cast<APlayerController>(Controller);
+	if (IsValid(PlayerController))
 	{
-		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<
-			UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem =
+			ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 		{
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
@@ -40,7 +39,7 @@ void AMainCharacter::BeginPlay()
 
 void AMainCharacter::Move(const FInputActionValue& Value)
 {
-	FVector2D MovementVector = Value.Get<FVector2D>();
+	const FVector2D MovementVector = Value.Get<FVector2D>();
 
 	if (Controller != nullptr)
 	{
@@ -55,8 +54,13 @@ void AMainCharacter::Move(const FInputActionValue& Value)
 		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
 		// Add movement
-		AddMovementInput(ForwardDirection, MovementVector.Y);
-		AddMovementInput(RightDirection, MovementVector.X);
+		this->AddMovementInput(ForwardDirection, MovementVector.Y);
+		this->AddMovementInput(RightDirection, MovementVector.X);
+	}
+	else
+	{
+		// Print a message to the screen if the controller is null.
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Controller is null");
 	}
 }
 
@@ -73,20 +77,18 @@ void AMainCharacter::Look(const FInputActionValue& Value)
 	const FVector2D LookAxisVector = Value.Get<FVector2D>();
 
 	// Add yaw and pitch input to controller
-	AddControllerYawInput(LookAxisVector.X * -1);
-	AddControllerPitchInput(LookAxisVector.Y);
+	this->AddControllerYawInput(LookAxisVector.X * -1);
+	this->AddControllerPitchInput(LookAxisVector.Y);
 }
 
-// Called every frame
-void AMainCharacter::Tick(float DeltaTime)
+void AMainCharacter::Tick(const float DeltaTime)
 {
-	Super::Tick(DeltaTime);
+	this->Super::Tick(DeltaTime);
 }
 
-// Called to bind functionality to input
 void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	this->Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{

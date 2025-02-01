@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -8,7 +6,10 @@
 #include "Inventory.generated.h"
 
 /**
- * Struct to determine each slot of the inventory
+ * @brief Struct to determine each slot of the inventory.
+ *
+ * This struct represents a single slot in the inventory, containing information
+ * about the item type and the quantity of that item in the slot.
  */
 USTRUCT()
 struct FSlot
@@ -16,18 +17,34 @@ struct FSlot
 	GENERATED_BODY()
 
 	/**
-	 * How many items the inventory contains for the same type
+	 * @brief The quantity of items of the same type in this inventory slot.
+	 *
+	 * This property represents the number of items that are stored in this particular
+	 * inventory slot. It is used to keep track of how many items of the same type
+	 * are currently held in the slot. For example, if the slot contains health potions,
+	 * this property will indicate how many health potions are in the slot.
 	 */
 	UPROPERTY(EditAnywhere, Category=Item)
 	int Amount;
 
 	/**
-	 * Item reference
+	 * @brief Reference to the item data associated with this slot.
+	 *
+	 * This property holds a reference to the `UItemData` object that represents the type of item
+	 * stored in this inventory slot. It is used to identify the item type and access its properties,
+	 * such as name, description, and other relevant data.
 	 */
 	UPROPERTY(EditAnywhere, Category=Item)
 	UItemData* Data;
 };
 
+/**
+ * @brief Inventory component for managing items.
+ *
+ * This class represents an inventory component that can be attached to an actor.
+ * It provides functionality to add, remove, and manage items within the inventory.
+ * The inventory is composed of slots, each containing a specific type of item and its quantity.
+ */
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class DROPPER_API UInventory : public UActorComponent
 {
@@ -35,62 +52,104 @@ class DROPPER_API UInventory : public UActorComponent
 
 public:
 	/**
-	 * Sets default values for this component's properties
+	 * @brief Sets default values for this component's properties.
+	 *
+	 * This constructor initializes the inventory component with default values.
+	 * It sets up any necessary properties or configurations required for the inventory
+	 * to function correctly when the game starts or when the component is spawned.
 	 */
 	UInventory();
 
 protected:
 	/**
-	 * Array of slots—Container for items
+	 * @brief Array of slots—Container for items.
+	 *
+	 * This property represents the inventory slots, each containing a specific type of item and its quantity.
+	 * It is used to manage and organize the items held by the inventory component.
 	 */
 	UPROPERTY(EditAnywhere, Category=Inventory)
 	TArray<FSlot> Slots;
 
 	/**
-	 * Called when the game starts
+	 * @brief Called when the game starts or when spawned.
+	 *
+	 * This function is called when the game starts or when the component is spawned.
+	 * It is used to initialize any properties or perform any setup required for the inventory
+	 * component to function correctly during gameplay.
 	 */
 	virtual void BeginPlay() override;
 
 public:
 	/**
-	 * Add an item into the inventory
-	 * @param Item Item type
-	 * @param Amount Quantity of items to be added
+	 * @brief Add an item into the inventory.
+	 *
+	 * This function adds a specified quantity of a given item type to the inventory.
+	 * If the item already exists in the inventory, the quantity is increased.
+	 * Otherwise, a new slot is created for the item.
+	 *
+	 * @param Item The item type to be added.
+	 * @param Amount The quantity of the item to be added.
 	 */
 	void AddItem(UItemData* Item, int Amount);
 
 	/**
-	 * Add an item into the inventory
-	 * @param Item Item
-	 * @param Amount Quantity of items to be added
+	 * @brief Add an item into the inventory.
+	 *
+	 * This function adds a specified quantity of a given item actor to the inventory.
+	 * If the item already exists in the inventory, the quantity is increased.
+	 * Otherwise, a new slot is created for the item.
+	 *
+	 * @param Item The item actor to be added.
+	 * @param Amount The quantity of the item to be added.
 	 */
 	void AddItem(AItemActor* Item, int Amount);
 
 	/**
-	 * Remove an item from the inventory
-	 * @param Item Item to be removed
-	 * @param Amount Quantity of items to be removed
-	 * @param Location Location to be placed the dropped items
+	 * @brief Remove an item from the inventory.
+	 *
+	 * This function removes a specified quantity of a given item type from the inventory.
+	 * If the quantity to be removed is greater than the quantity in the inventory, all items of that type are removed.
+	 * The removed items are spawned at the specified location in the game world.
+	 *
+	 * @param Item The item type to be removed.
+	 * @param Amount The quantity of the item to be removed.
+	 * @param Location The location where the removed items will be spawned.
 	 */
 	void DropItem(const UItemData* Item, int Amount, const FVector& Location) const;
 
 	/**
-	 * Remove an item from the inventory
-	 * @param Index Index of the item to be removed
-	 * @param Amount Quantity of items to be removed
-	 * @param Location Location to be placed the dropped items
+	 * @brief Remove an item from the inventory by index.
+	 *
+	 * This function removes a specified quantity of an item from the inventory based on its index.
+	 * If the quantity to be removed is greater than the quantity in the inventory, all items of that type are removed.
+	 * The removed items are spawned at the specified location in the game world.
+	 *
+	 * @param Index The index of the item to be removed.
+	 * @param Amount The quantity of the item to be removed.
+	 * @param Location The location where the removed items will be spawned.
 	 */
 	void DropItem(int Index, int Amount, const FVector& Location);
 
 	/**
-	 * Get the single inventory slot based on the item data
-	 * @param Item Item data
-	 * @return Inventory slot
+	 * @brief Get the single inventory slot based on the item data.
+	 *
+	 * This function searches through the inventory slots to find a slot that contains the specified item data.
+	 * If a matching slot is found, it returns a pointer to that slot. If no matching slot is found, it returns nullptr.
+	 *
+	 * @param Item The item data to search for in the inventory slots.
+	 * @return A pointer to the inventory slot containing the specified item data, or nullptr if no matching slot is found.
 	 */
 	FSlot* GetSlotByData(const UItemData* Item);
 
 	/**
-	 * Called every frame
+	 * @brief Called every frame.
+	 *
+	 * This function is called once per frame and is used to update the inventory component.
+	 * It performs any necessary per-frame updates or logic required for the inventory to function correctly.
+	 *
+	 * @param DeltaTime The time elapsed since the last frame.
+	 * @param TickType The type of tick this is, for example, are we paused, or 'simulating' in the editor.
+	 * @param ThisTickFunction Internal tick function struct that caused this to run.
 	 */
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
 	                           FActorComponentTickFunction* ThisTickFunction) override;
