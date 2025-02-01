@@ -1,4 +1,5 @@
 #include "Inventory.h"
+#include "ItemActor.h"
 
 UInventory::UInventory()
 {

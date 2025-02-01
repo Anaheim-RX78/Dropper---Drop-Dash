@@ -1,10 +1,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ItemData.h"
 #include "GameFramework/Actor.h"
 #include "ItemActor.generated.h"
 
+class UItemData;
 /**
  * @brief Actor class representing an item in the game world.
  *

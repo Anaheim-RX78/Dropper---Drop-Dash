@@ -1,10 +1,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ItemActor.h"
 #include "Engine/DataAsset.h"
 #include "ItemData.generated.h"
 
+class AItemActor;
 /**
  * @brief Data asset class representing item data.
  *
