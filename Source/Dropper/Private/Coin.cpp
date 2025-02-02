@@ -13,9 +13,7 @@ ACoin::ACoin()
 	this->Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 	this->Mesh->SetCollisionResponseToChannel(ECC_Visibility, ECR_Overlap);
 	this->Mesh->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
-	this->Mesh->OnComponentBeginOverlap.AddDynamic(this, &ACoin::OnBeginOverlap);
-
-	this->InteractableComponent = CreateDefaultSubobject<UInteractableComponent>("Interactable");
+	this->Mesh->SetRelativeLocation(FVector(0, 0, 50));
 
 	// Set the mesh as the root component
 	this->SetRootComponent(this->Mesh);
