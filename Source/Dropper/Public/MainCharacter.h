@@ -37,7 +37,7 @@ protected:
 	 * It can be adjusted to change how fast the character moves.
 	 */
 	UPROPERTY(EditAnywhere, Category=Movement)
-	float Speed = 100.0f;
+	float Speed = 600.0f;
 
 	/**
 	 * @brief Camera component, needed to have a visualization attached to the character.
@@ -76,6 +76,15 @@ protected:
 	 */
 	UPROPERTY(VisibleAnywhere)
 	bool IsSprinting = false;
+
+	/**
+	 * @brief Indicates whether the inventory is open.
+	 *
+	 * This property is a boolean flag that indicates whether the character's inventory is currently open.
+	 * It is used to determine the state of the inventory UI and update the character's interaction accordingly.
+	 */
+	UPROPERTY(VisibleAnywhere)
+	bool IsInventoryOpen = false;
 
 	/**
 	 * @brief Called when the game starts or when spawned.
