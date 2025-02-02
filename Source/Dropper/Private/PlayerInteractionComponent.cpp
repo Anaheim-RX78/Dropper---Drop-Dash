@@ -27,18 +27,25 @@ void UPlayerInteractionComponent::CheckInteractionRange()
 	);
 
 	const AActor* InteractableActor = InteractableFound.GetActor();
+
+	// Check if no actor was hit by the line trace
+	if (InteractableActor == nullptr)
+	{
+		// No actor was hit by the line trace, set CurrentInteractable to nullptr.
+		this->CurrentInteractable = nullptr;
+		return;
+	}
+
 	UInteractableComponent* Component = InteractableActor->GetComponentByClass<UInteractableComponent>();
 
 	if (this->CurrentInteractable == nullptr && Component)
 	{
-		// No current interactable actor, but a new one was found, display a debug message and update it.
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, "Interactable actor found");
+		// No current interactable actor, but a new one was found.
 		this->CurrentInteractable = Component;
 	}
 	else if (this->CurrentInteractable && Component && Component != this->CurrentInteractable)
 	{
-		// An existing interactable actor was found, but it's different from the current one, display a debug message and update it.
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Yellow, "Interactable actor replaced");
+		// An existing interactable actor was found, but it's different from the current one.
 		CurrentInteractable = Component;
 	}
 }
