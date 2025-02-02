@@ -34,9 +34,6 @@ void UInventory::AddItem(AItemActor* Item, const int Amount)
 {
 	// Add the item into the inventory
 	this->AddItem(Item->Data, Amount);
-	const FString Message = FString::Printf(TEXT("There are %d items in the inventory"),
-	                                        this->GetSlotByData(Item->Data)->Amount);
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Black, Message);
 
 	// Destroy the spawned item
 	Item->Destroy();
