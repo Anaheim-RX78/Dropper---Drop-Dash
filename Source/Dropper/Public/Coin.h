@@ -1,6 +1,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "InteractableComponent.h"
+#include "ItemActor.h"
+#include "Components/SphereComponent.h"
 #include "GameFramework/Actor.h"
 #include "Coin.generated.h"
 
@@ -15,7 +18,7 @@ class UCapsuleComponent;
  * The class also handles the coin's animation and interaction with other actors.
  */
 UCLASS()
-class DROPPER_API ACoin : public AActor
+class DROPPER_API ACoin : public AItemActor
 {
 	GENERATED_BODY()
 
@@ -65,15 +68,15 @@ protected:
 	UStaticMeshComponent* Mesh;
 
 	/**
-	 * @brief Capsule component used for collision detection.
+	 * @brief The interactable component for the coin.
 	 *
-	 * This property represents a UCapsuleComponent that is used to define the collision
-	 * shape for the coin actor.
-	 * It allows for precise collision detection and interaction
-	 * with other actors in the game world.
+	 * This property holds a reference to the UInteractableComponent, which allows the coin to be interacted with.
+	 * It can be used to trigger interaction events and handle interaction logic for the coin.
+	 *
+	 * @note This property is visible in the Unreal Editor but cannot be edited.
 	 */
-	UPROPERTY(EditAnywhere)
-	UCapsuleComponent* Capsule;
+	UPROPERTY(VisibleAnywhere)
+	UInteractableComponent* InteractableComponent;
 
 	/**
 	 * @brief Called when an actor begins to overlap with this coin.

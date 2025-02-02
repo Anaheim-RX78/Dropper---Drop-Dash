@@ -15,6 +15,8 @@ ACoin::ACoin()
 	this->Mesh->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 	this->Mesh->OnComponentBeginOverlap.AddDynamic(this, &ACoin::OnBeginOverlap);
 
+	this->InteractableComponent = CreateDefaultSubobject<UInteractableComponent>("Interactable");
+
 	// Set the mesh as the root component
 	this->SetRootComponent(this->Mesh);
 }
@@ -40,7 +42,7 @@ void ACoin::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 		{
 			UGameplayStatics::PlaySound2D(this, SoundEffect, 1.0f, 1.0f, 0.28f);
 		}
-		// TODO: Add save in inventory
+		Character->Inventory->AddItem(this, 1);
 		this->Destroy();
 	}
 }
