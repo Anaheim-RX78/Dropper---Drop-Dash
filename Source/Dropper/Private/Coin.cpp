@@ -41,6 +41,12 @@ void ACoin::GetCoin(const FInteractionPayload Payload)
 		}
 		// Add the coin to the character's inventory and destroy the coin.
 		Character->Inventory->AddItem(this, 1);
+
+		const FSlot* InventorySlot = Character->Inventory->GetSlotByData(this->Data);
+
+		const FString Message = FString::Printf(TEXT("You have now %d coins in total"), InventorySlot->Amount);
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, Message);
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "New coin obtained!");
 	}
 }
 
