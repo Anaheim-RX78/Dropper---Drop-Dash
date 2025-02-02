@@ -37,7 +37,7 @@ void AMainCharacter::BeginPlay()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("No game instance found"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "No game instance found");
 	}
 }
 
@@ -51,14 +51,27 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	this->Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-void AMainCharacter::SetupMovementInput(const FVector2D& Value)
+void AMainCharacter::Move(const FVector2D& Value)
 {
 	this->AddMovementInput(this->GetActorForwardVector(), Value.Y);
 	this->AddMovementInput(this->GetActorRightVector(), Value.X);
 }
 
-void AMainCharacter::SetupLookInput(const FVector2D& Value)
+void AMainCharacter::Look(const FVector2D& Value)
 {
-	this->AddControllerYawInput(Value.X);
 	this->AddControllerPitchInput(Value.Y);
+	this->AddControllerYawInput(Value.X);
+}
+
+void AMainCharacter::Sprint(const FVector2D& Value)
+{
+	this->IsSprinting = !this->IsSprinting;
+	if (this->IsSprinting)
+	{
+		this->GetCharacterMovement()->MaxWalkSpeed = Speed * 2;
+	}
+	else
+	{
+		this->GetCharacterMovement()->MaxWalkSpeed = Speed;
+	}
 }

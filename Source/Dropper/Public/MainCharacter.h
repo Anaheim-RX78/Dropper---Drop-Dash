@@ -144,7 +144,7 @@ public:
 	 *
 	 * @param Value The input value for movement.
 	 */
-	void SetupMovementInput(const FVector2D& Value);
+	void Move(const FVector2D& Value);
 
 	/**
 	 * @brief Called for looking input.
@@ -154,5 +154,15 @@ public:
 	 *
 	 * @param Value The input value for looking.
 	 */
-	void SetupLookInput(const FVector2D& Value);
+	void Look(const FVector2D& Value);
+
+	/**
+	 * @brief Called for sprinting input.
+	 *
+	 * This function is called to handle sprinting input from the player.
+	 * It updates the character's speed based on the input value.
+	 *
+	 * @param Value The input value for sprinting.
+	 */
+	void Sprint(const FVector2D& Value);
 };
