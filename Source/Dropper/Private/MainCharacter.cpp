@@ -37,7 +37,10 @@ void AMainCharacter::BeginPlay()
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "No game instance found");
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red,
+		                                 "Configure it in project settings -> Project -> Maps & Modes -> Game Instance");
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red,
+		                                 "The game instance is not an instance of DropperGameInstance");
 	}
 }
 
