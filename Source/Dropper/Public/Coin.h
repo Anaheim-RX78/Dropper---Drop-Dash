@@ -134,7 +134,7 @@ protected:
 	 * @note The default value is set to a zero vector, meaning no movement.
 	 */
 	UPROPERTY(EditAnywhere)
-	FVector DeltaMovement;
+	FVector DeltaMovement = FVector(0, 0, 50);
 
 	/**
 	 * @brief Final position for the animation.
