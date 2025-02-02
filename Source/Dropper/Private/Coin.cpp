@@ -30,20 +30,19 @@ void ACoin::BeginPlay()
 	this->TargetPosition = GetActorLocation() + DeltaMovement;
 }
 
-void ACoin::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-                           int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void ACoin::GetCoin(const FInteractionPayload Payload)
 {
-	// Check if the other actor is a MainCharacter (player) and if it has a valid pointer.
-	const AMainCharacter* Character = Cast<AMainCharacter>(OtherActor);
+	// Check if the interactor is a valid MainCharacter.
+	const AMainCharacter* Character = Cast<AMainCharacter>(Payload.Interactor);
 	if (IsValid(Character))
 	{
 		// Play sound effect if provided.
-		if (SoundEffect)
+		if (this->SoundEffect)
 		{
-			UGameplayStatics::PlaySound2D(this, SoundEffect, 1.0f, 1.0f, 0.28f);
+			UGameplayStatics::PlaySound2D(this, this->SoundEffect, 1.0f, 1.0f, 0.28f);
 		}
+		// Add the coin to the character's inventory and destroy the coin.
 		Character->Inventory->AddItem(this, 1);
-		this->Destroy();
 	}
 }
 
@@ -52,8 +51,8 @@ void ACoin::Tick(const float DeltaTime)
 	this->Super::Tick(DeltaTime);
 
 	// Configure the floating animation
-	this->Time += DeltaTime * AnimationSpeed;
-	const float t = 0.5f - 0.5f * FMath::Cos(Time);
+	this->Time += DeltaTime * this->AnimationSpeed;
+	const float t = 0.5f - 0.5f * FMath::Cos(this->Time);
 
-	this->SetActorLocation(FMath::Lerp(InitialPosition, TargetPosition, t));
+	this->SetActorLocation(FMath::Lerp(this->InitialPosition, this->TargetPosition, t));
 }

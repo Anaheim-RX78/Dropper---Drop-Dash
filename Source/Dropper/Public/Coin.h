@@ -3,7 +3,6 @@
 #include "CoreMinimal.h"
 #include "InteractableComponent.h"
 #include "ItemActor.h"
-#include "Components/SphereComponent.h"
 #include "GameFramework/Actor.h"
 #include "Coin.generated.h"
 
@@ -67,36 +66,8 @@ protected:
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* Mesh;
 
-	/**
-	 * @brief The interactable component for the coin.
-	 *
-	 * This property holds a reference to the UInteractableComponent, which allows the coin to be interacted with.
-	 * It can be used to trigger interaction events and handle interaction logic for the coin.
-	 *
-	 * @note This property is visible in the Unreal Editor but cannot be edited.
-	 */
-	UPROPERTY(VisibleAnywhere)
-	UInteractableComponent* InteractableComponent;
-
-	/**
-	 * @brief Called when an actor begins to overlap with this coin.
-	 *
-	 * This function is triggered when another actor starts overlapping with the coin's collision component.
-	 * It can be used to implement coin collection logic, such as increasing the player's score or playing a sound effect.
-	 *
-	 * @param OverlappedComponent The primitive component that was overlapped.
-	 * @param OtherActor The actor that overlapped this component.
-	 * @param OtherComp The primitive component that overlapped this component.
-	 * @param OtherBodyIndex The body index of the component doing the overlapping.
-	 * @param bFromSweep True if the overlap was triggered by a sweep test.
-	 * @param SweepResult The hit result from the sweep that triggered this overlap.
-	 *
-	 * @return Void This function does not return a value.
-	*/
-	UFUNCTION()
-	virtual void OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	                            UPrimitiveComponent* OtherComp,
-	                            int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION(BlueprintCallable)
+	void GetCoin(FInteractionPayload Payload);
 
 	/**
 	 * @brief Sets the animation speed for the coin's movement.
