@@ -69,6 +69,15 @@ protected:
 	UPlayerInteractionComponent* InteractionComponent;
 
 	/**
+	 * @brief Indicates whether the character is sprinting.
+	 *
+	 * This property is a boolean flag that indicates whether the character is currently sprinting.
+	 * It is used to determine the character's movement speed and update the character's state accordingly.
+	 */
+	UPROPERTY(VisibleAnywhere)
+	bool IsSprinting = false;
+
+	/**
 	 * @brief Called when the game starts or when spawned.
 	 *
 	 * This function is called when the game starts or when the character is spawned.
