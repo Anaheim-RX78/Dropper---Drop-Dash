@@ -88,6 +88,15 @@ protected:
 	void Jump(const FInputActionValue& Value);
 
 	/**
+     * @brief Handles the sprint action.
+     *
+     * This method is called when the sprint input action is triggered.
+     * It processes the input value and performs the sprint action for the main character.
+     */
+	UFUNCTION()
+	void Sprint(const FInputActionValue& Value);
+
+	/**
 	 * @brief Handles the move action.
 	 *
 	 * This method is called when the move input action is triggered. It processes
