@@ -29,13 +29,9 @@ void AMainCharacter::BeginPlay()
 	Super::BeginPlay();
 	this->GetCharacterMovement()->MaxWalkSpeed = Speed;
 	UGameInstance* Instance = UGameplayStatics::GetGameInstance(GetWorld());
-	UDropperGameInstance* DropperInstance = Cast<UDropperGameInstance>(Instance);
+	const UDropperGameInstance* DropperInstance = Cast<UDropperGameInstance>(Instance);
 
-	if (IsValid(DropperInstance))
-	{
-		DropperInstance->MaxDepth = FMath::RandRange(0.0f, 1000.0f);
-	}
-	else
+	if (!IsValid(DropperInstance))
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red,
 		                                 "Configure it in project settings -> Project -> Maps & Modes -> Game Instance");
