@@ -3,7 +3,6 @@
 #include "MainCharacter.h"
 #include "Kismet/GameplayStatics.h"
 
-// Sets default values
 ATeleport::ATeleport()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -15,7 +14,6 @@ ATeleport::ATeleport()
 	this->SetRootComponent(this->BoxComponent);
 }
 
-// Called when the game starts or when spawned
 void ATeleport::BeginPlay()
 {
 	Super::BeginPlay();
@@ -27,10 +25,13 @@ void ATeleport::PlayTeleportSound() const
 	{
 		UGameplayStatics::PlaySound2D(this, this->TeleportSound);
 	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Teleport sound not set!"));
+	}
 }
 
-// Called every frame
-void ATeleport::Tick(float DeltaTime)
+void ATeleport::Tick(const float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
@@ -42,9 +43,10 @@ void ATeleport::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor*
 	AMainCharacter* Character = Cast<AMainCharacter>(OtherActor);
 	if (IsValid(Character))
 	{
-		// Teleport the character to the spawn point.
-		Character->SetActorLocation(this->SpawnPoint);
 		// Play sound effect if provided.
 		this->PlayTeleportSound();
+
+		// Teleport the character to the spawn point.
+		Character->SetActorLocation(this->SpawnPoint);
 	}
 }
