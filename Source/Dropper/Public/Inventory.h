@@ -131,6 +131,14 @@ public:
 	void DropItem(int Index, int Amount, const FVector& Location);
 
 	/**
+	 * @brief Clear all items from the inventory.
+	 *
+	 * This function removes all items from the inventory, effectively resetting it to an empty state.
+	 * It clears all slots and their associated item data, making the inventory ready for new items to be added.
+	 */
+	void ClearInventory();
+
+	/**
 	 * @brief Get the single inventory slot based on the item data.
 	 *
 	 * This function searches through the inventory slots to find a slot that contains the specified item data.

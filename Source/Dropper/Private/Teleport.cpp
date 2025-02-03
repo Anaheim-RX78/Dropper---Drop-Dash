@@ -1,5 +1,6 @@
 #include "Teleport.h"
 
+#include "DropperGameInstance.h"
 #include "MainCharacter.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -48,5 +49,24 @@ void ATeleport::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor*
 
 		// Teleport the character to the spawn point.
 		Character->SetActorLocation(this->SpawnPoint);
+
+		// Update the game mode
+		if (!this->NewLevelName.IsEmpty())
+		{
+			UDropperGameInstance* DropperInstance =
+				Cast<UDropperGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+			if (IsValid(DropperInstance))
+			{
+				// Update the current level identifier and load the new level.
+				DropperInstance->CurrentLevelIdentifier = this->NewLevelName;
+				DropperInstance->OnLevelLoaded(this->NewLevelName);
+			}
+			else
+			{
+				// GameInstance is not a DropperGameInstance
+				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red,
+				                                 "The game instance is not an instance of UDropperGameInstance");
+			}
+		}
 	}
 }

@@ -1,5 +1,8 @@
 #include "Inventory.h"
+
+#include "DropperGameInstance.h"
 #include "ItemActor.h"
+#include "Kismet/GameplayStatics.h"
 
 UInventory::UInventory()
 {
@@ -52,6 +55,29 @@ void UInventory::DropItem(const int Index, const int Amount, const FVector& Loca
 {
 	// Drop the item based on the slot index
 	this->DropItem(Slots[Index].Data, Amount, Location);
+}
+
+void UInventory::ClearInventory()
+{
+	for (int Index = 0; Index < this->Slots.Num(); Index++)
+	{
+		this->Slots.RemoveAt(Index);
+	}
+
+	UGameInstance* Instance = UGameplayStatics::GetGameInstance(GetWorld());
+	UDropperGameInstance* DropperInstance = Cast<UDropperGameInstance>(Instance);
+
+	if (IsValid(DropperInstance))
+	{
+		DropperInstance->TotalCoins = 0;
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red,
+		                                 "The game instance is not an instance of UDropperGameInstance");
+		return;
+	}
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Inventory cleared");
 }
 
 FSlot* UInventory::GetSlotByData(const UItemData* Item)
