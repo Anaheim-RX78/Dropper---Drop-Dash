@@ -1,5 +1,6 @@
 #include "Coin.h"
 
+#include "DropperGameInstance.h"
 #include "MainCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
@@ -43,6 +44,22 @@ void ACoin::GetCoin(const FInteractionPayload Payload)
 		Character->Inventory->AddItem(this, 1);
 
 		const FSlot* InventorySlot = Character->Inventory->GetSlotByData(this->Data);
+
+		// Update the total values of the coins
+		UDropperGameInstance* DropperInstance =
+			Cast<UDropperGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+		if (IsValid(DropperInstance))
+		{
+			DropperInstance->TotalCoinsValue += this->CoinValue;
+
+			// Print the total coins value
+			FString Message = FString::Printf(TEXT("Total value: %d"), DropperInstance->TotalCoinsValue);
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, Message);
+
+			// Print the coin value
+			Message = FString::Printf(TEXT("Total value for the new coin: %d"), this->CoinValue);
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, Message);
+		}
 
 		const FString Message = FString::Printf(TEXT("You have now %d coins in total"), InventorySlot->Amount);
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, Message);
