@@ -136,6 +136,35 @@ FSlot* UInventory::GetSlotByIndex(const int Index)
 	return &InventorySlots[Index];
 }
 
+void UInventory::ScrollInventory()
+{
+	if (this->InventorySlots.IsEmpty())
+	{
+		return;
+	}
+
+	if (this->CurrentSlotIndex + 2 > this->InventorySlots.Num())
+	{
+		this->CurrentSlotIndex = 0;
+	}
+	else
+	{
+		this->CurrentSlotIndex++;
+	}
+
+	const FSlot* CurrentSlot = this->GetSlotByIndex(this->CurrentSlotIndex);
+	if (CurrentSlot->Amount == 0)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Inventory slot empty");
+	}
+	else
+	{
+		const FString Message = FString::Printf(TEXT("Selected item: %s - %s"), *CurrentSlot->Data->Name,
+		                                        *CurrentSlot->Data->Description);
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, Message);
+	}
+}
+
 void UInventory::TickComponent(const float DeltaTime, const ELevelTick TickType,
                                FActorComponentTickFunction* ThisTickFunction)
 {

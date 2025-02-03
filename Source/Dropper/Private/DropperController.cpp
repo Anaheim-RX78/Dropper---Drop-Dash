@@ -35,12 +35,18 @@ void ADropperController::SetupInputComponent()
 	                                   &ADropperController::Move);
 	EnhancedInputComponent->BindAction(this->InputMap->Actions["Look"], ETriggerEvent::Triggered, this,
 	                                   &ADropperController::Look);
+	// EnhancedInputComponent->BindAction(this->InputMap->Actions["SkyDive"], ETriggerEvent::Triggered, this,
+	// 								   &ADropperController::Look);
+	// EnhancedInputComponent->BindAction(this->InputMap->Actions["UseGlider"], ETriggerEvent::Triggered, this,
+	// 								   &ADropperController::Look);
 	EnhancedInputComponent->BindAction(this->InputMap->Actions["Interact"], ETriggerEvent::Started, this,
 	                                   &ADropperController::OnInteract);
 	EnhancedInputComponent->BindAction(this->InputMap->Actions["Sprint"], ETriggerEvent::Started, this,
 	                                   &ADropperController::Sprint);
 	EnhancedInputComponent->BindAction(this->InputMap->Actions["Drop"], ETriggerEvent::Started, this,
 	                                   &ADropperController::Drop);
+	EnhancedInputComponent->BindAction(this->InputMap->Actions["ScrollInventory"], ETriggerEvent::Triggered, this,
+	                                   &ADropperController::ScrollInventory);
 }
 
 void ADropperController::OnPossess(APawn* InPawn)
@@ -72,6 +78,11 @@ void ADropperController::Look(const FInputActionValue& Value)
 void ADropperController::Drop(const FInputActionValue& Value)
 {
 	this->MainCharacter->Drop(Value.Get<FVector2D>());
+}
+
+void ADropperController::ScrollInventory(const FInputActionValue& Value)
+{
+	this->MainCharacter->ScrollInventory(Value.Get<FVector2D>());
 }
 
 void ADropperController::OnInteract(const FInputActionValue& Value)

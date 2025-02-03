@@ -15,8 +15,3 @@ void AItemActor::Tick(const float DeltaTime)
 {
 	this->Super::Tick(DeltaTime);
 }
-
-void AItemActor::UseItem()
-{
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Unsupported function, override it!");
-}

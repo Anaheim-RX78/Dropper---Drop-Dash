@@ -166,4 +166,14 @@ public:
 	 * @param Value The input value for dropping.
 	 */
 	void Drop(const FVector2D& Value);
+
+	/**
+	 * @brief Handles the scroll inventory action.
+	 *
+	 * This function is called when the scroll inventory input action is triggered.
+	 * It processes the input value and performs the scroll inventory action for the main character.
+	 *
+	 * @param Value The input action value associated with the scroll inventory action.
+	 */
+	void ScrollInventory(const FVector2D& Value);
 };

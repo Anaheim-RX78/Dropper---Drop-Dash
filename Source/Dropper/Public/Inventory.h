@@ -171,6 +171,15 @@ public:
 	FSlot* GetSlotByIndex(const int Index);
 
 	/**
+	 * @brief Scrolls through the inventory slots.
+	 *
+	 * This function is called to handle the scrolling of the inventory.
+	 * It updates the current slot index based on the input value, allowing the player
+	 * to navigate through the inventory slots.
+	 */
+	void ScrollInventory();
+
+	/**
 	 * @brief Called every frame.
 	 *
 	 * This function is called once per frame and is used to update the inventory component.

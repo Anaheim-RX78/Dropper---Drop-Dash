@@ -94,3 +94,8 @@ void AMainCharacter::Drop(const FVector2D& Value)
 	// There are no items left, display an error message
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "No items remaining");
 }
+
+void AMainCharacter::ScrollInventory(const FVector2D& Value)
+{
+	this->Inventory->ScrollInventory();
+}

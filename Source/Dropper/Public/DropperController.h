@@ -128,6 +128,17 @@ protected:
 	void Drop(const FInputActionValue& Value);
 
 	/**
+	 * @brief Handles the scroll inventory action.
+	 *
+	 * This method is called when the scroll inventory input action is triggered.
+	 * It processes the input value and performs the scroll inventory action for the main character.
+	 *
+	 * @param Value The input action value associated with the scroll inventory action.
+	 */
+	UFUNCTION()
+	void ScrollInventory(const FInputActionValue& Value);
+
+	/**
 	 * @brief Handles the interact action.
 	 *
 	 * This method is called when the interact input action is triggered. It processes
