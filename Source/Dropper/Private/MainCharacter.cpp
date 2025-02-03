@@ -56,8 +56,8 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 void AMainCharacter::Move(const FVector2D& Value)
 {
-	this->AddMovementInput(this->GetActorForwardVector(), Value.Y);
-	this->AddMovementInput(this->GetActorRightVector(), Value.X);
+	this->AddMovementInput(FRotationMatrix(FRotator(0, GetControlRotation().Yaw, 0)).GetUnitAxis(EAxis::Y), Value.X);
+	this->AddMovementInput(FRotationMatrix(FRotator(0, GetControlRotation().Yaw, 0)).GetUnitAxis(EAxis::X), Value.Y);
 }
 
 void AMainCharacter::Look(const FVector2D& Value)
