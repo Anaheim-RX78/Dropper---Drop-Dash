@@ -43,26 +43,15 @@ void ACoin::GetCoin(const FInteractionPayload Payload)
 		// Add the coin to the character's inventory and destroy the coin.
 		Character->Inventory->AddItem(this, 1);
 
-		const FSlot* InventorySlot = Character->Inventory->GetSlotByData(this->Data);
-
 		// Update the total values of the coins
 		UDropperGameInstance* DropperInstance =
 			Cast<UDropperGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 		if (IsValid(DropperInstance))
 		{
 			DropperInstance->TotalCoinsValue += this->CoinValue;
-
-			// Print the total coins value
-			FString Message = FString::Printf(TEXT("Total value: %d"), DropperInstance->TotalCoinsValue);
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, Message);
-
-			// Print the coin value
-			Message = FString::Printf(TEXT("Total value for the new coin: %d"), this->CoinValue);
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, Message);
+			DropperInstance->TotalCoins++;
 		}
 
-		const FString Message = FString::Printf(TEXT("You have now %d coins in total"), InventorySlot->Amount);
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, Message);
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "New coin obtained!");
 	}
 }

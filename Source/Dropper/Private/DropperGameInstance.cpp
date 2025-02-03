@@ -15,7 +15,7 @@ void UDropperGameInstance::OnLevelLoaded(const FString LevelIdentifier)
 	}
 }
 
-int UDropperGameInstance::GetScore()
+int UDropperGameInstance::GetScore() const
 {
-	return 0;
+	return this->ElapsedTime / 60 + this->TotalCoins + this->TotalCoinsValue;
 }

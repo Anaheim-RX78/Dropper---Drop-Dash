@@ -45,6 +45,16 @@ public:
 	int TotalCoinsValue = 0;
 
 	/**
+	 * @brief The total number of coins collected by the player.
+	 *
+	 * This property stores the total number of coins that the player has collected
+	 * throughout the game.
+	 * It is used for score tracking and display purposes.
+	 */
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Score)
+	int TotalCoins = 0;
+
+	/**
 	 * @brief The identifier of the current level.
 	 *
 	 * This property stores the identifier of the current level that the
@@ -82,5 +92,5 @@ public:
 	 * @return The player's current score as an integer.
 	 */
 	UFUNCTION(BlueprintCallable)
-	int GetScore();
+	int GetScore() const;
 };
