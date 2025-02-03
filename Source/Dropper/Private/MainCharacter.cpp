@@ -28,8 +28,8 @@ void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	this->GetCharacterMovement()->MaxWalkSpeed = Speed;
-	UGameInstance* Instance = UGameplayStatics::GetGameInstance(GetWorld());
-	const UDropperGameInstance* DropperInstance = Cast<UDropperGameInstance>(Instance);
+	const UDropperGameInstance* DropperInstance =
+		Cast<UDropperGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 
 	if (!IsValid(DropperInstance))
 	{
