@@ -57,3 +57,27 @@ void ADragonBall::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActo
 		}
 	}
 }
+
+void ADragonBall::UseItem()
+{
+	const AMainCharacter* MainCharacter = Cast<AMainCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	const UDropperGameInstance* DropperInstance =
+		Cast<UDropperGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+
+	if (IsValid(MainCharacter))
+	{
+		if (IsValid(DropperInstance))
+		{
+			MainCharacter->Inventory->DropItem(this->Data, 1, FVector(0, 0, 0));
+		}
+		else
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red,
+			                                 "GameInstance is not an instance of UDropperGameInstance");
+		}
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Character is not an instance of AMainCharacter");
+	}
+}

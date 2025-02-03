@@ -79,6 +79,7 @@ void UInventory::DropItem(UItemData* Item, const int Amount, const FVector& Loca
 	{
 		// For each item in the inventory, spawn it in the defined location.
 		this->GetWorld()->SpawnActor<AItemActor>(Item->Item, Location, FRotator::ZeroRotator);
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Item dropped");
 	}
 }
 

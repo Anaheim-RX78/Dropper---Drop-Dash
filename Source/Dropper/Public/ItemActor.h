@@ -55,4 +55,16 @@ public:
 	 * @param DeltaTime The time elapsed since the last frame.
 	 */
 	virtual void Tick(float DeltaTime) override;
+
+	/**
+	 * @brief Uses the item.
+	 *
+	 * This function is intended to be overridden by subclasses to define the specific behavior
+	 * when the item is used.
+	 * It is called when the item is activated or consumed in the game.
+	 *
+	 * @return Void This function does not return a value.
+	 */
+	UFUNCTION()
+	virtual void UseItem();
 };

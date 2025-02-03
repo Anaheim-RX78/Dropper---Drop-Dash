@@ -87,7 +87,7 @@ void AMainCharacter::Drop(const FVector2D& Value)
 	if (Slot->Amount != 0)
 	{
 		// There are some items left, drop one of them
-		this->Inventory->DropItem(this->Inventory->CurrentSlotIndex, 1, GetActorLocation());
+		this->Inventory->DropItem(this->Inventory->CurrentSlotIndex, 1, FVector(0, 0, 0));
 		return;
 	}
 
