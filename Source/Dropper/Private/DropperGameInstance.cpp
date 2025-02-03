@@ -33,5 +33,5 @@ void UDropperGameInstance::OnLevelLoaded(const FString LevelIdentifier)
 
 int UDropperGameInstance::GetScore() const
 {
-	return this->ElapsedTime / 60 + this->TotalCoins + this->TotalCoinsValue;
+	return this->TotalCoins + this->TotalCoinsValue + this->DragonBallsCount * 10 - this->ElapsedTime / 60;
 }
