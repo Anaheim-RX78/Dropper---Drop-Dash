@@ -39,6 +39,8 @@ void ADropperController::SetupInputComponent()
 	                                   &ADropperController::OnInteract);
 	EnhancedInputComponent->BindAction(this->InputMap->Actions["Sprint"], ETriggerEvent::Started, this,
 	                                   &ADropperController::Sprint);
+	EnhancedInputComponent->BindAction(this->InputMap->Actions["Drop"], ETriggerEvent::Started, this,
+	                                   &ADropperController::Drop);
 }
 
 void ADropperController::OnPossess(APawn* InPawn)
@@ -65,6 +67,11 @@ void ADropperController::Move(const FInputActionValue& Value)
 void ADropperController::Look(const FInputActionValue& Value)
 {
 	this->MainCharacter->Look(Value.Get<FVector2D>());
+}
+
+void ADropperController::Drop(const FInputActionValue& Value)
+{
+	this->MainCharacter->Drop(Value.Get<FVector2D>());
 }
 
 void ADropperController::OnInteract(const FInputActionValue& Value)

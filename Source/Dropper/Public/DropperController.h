@@ -117,6 +117,17 @@ protected:
 	void Look(const FInputActionValue& Value);
 
 	/**
+	 * @brief Handles the drop action.
+	 *
+	 * This method is called when the drop input action is triggered.
+	 * It processes the input value and performs the drop action for the main character.
+	 *
+	 * @param Value The input action value associated with the drop action.
+	 */
+	UFUNCTION()
+	void Drop(const FInputActionValue& Value);
+
+	/**
 	 * @brief Handles the interact action.
 	 *
 	 * This method is called when the interact input action is triggered. It processes

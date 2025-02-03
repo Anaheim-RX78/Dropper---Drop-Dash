@@ -68,7 +68,7 @@ protected:
 	 * It is used to manage and organize the items held by the inventory component.
 	 */
 	UPROPERTY(EditAnywhere, Category=Inventory)
-	TArray<FSlot> Slots;
+	TArray<FSlot> InventorySlots;
 
 	/**
 	 * @brief Called when the game starts or when spawned.
@@ -80,6 +80,15 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
+	/**
+	 * @brief The index of the current slot in the inventory.
+	 *
+	 * This property represents the index of the currently selected slot in the inventory.
+	 * It is used to keep track of which slot is currently active or selected by the player.
+	 */
+	UPROPERTY(VisibleAnywhere, Category=Inventory)
+	int CurrentSlotIndex = 0;
+
 	/**
 	 * @brief Add an item into the inventory.
 	 *
@@ -115,7 +124,7 @@ public:
 	 * @param Amount The quantity of the item to be removed.
 	 * @param Location The location where the removed items will be spawned.
 	 */
-	void DropItem(const UItemData* Item, int Amount, const FVector& Location) const;
+	void DropItem(UItemData* Item, int Amount, const FVector& Location);
 
 	/**
 	 * @brief Remove an item from the inventory by index.
@@ -148,6 +157,18 @@ public:
 	 * @return A pointer to the inventory slot containing the specified item data, or nullptr if no matching slot is found.
 	 */
 	FSlot* GetSlotByData(const UItemData* Item);
+
+
+	/**
+	 * @brief Get the single inventory slot based on the index.
+	 *
+	 * This function retrieves a slot from the inventory based on its index.
+	 * It returns a pointer to the slot if the index is valid, or nullptr if the index is out of range.
+	 *
+	 * @param Index The index of the slot to retrieve.
+	 * @return A pointer to the inventory slot at the specified index, or nullptr if the index is invalid.
+	 */
+	FSlot* GetSlotByIndex(const int Index);
 
 	/**
 	 * @brief Called every frame.

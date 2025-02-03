@@ -74,3 +74,23 @@ void AMainCharacter::Sprint(const FVector2D& Value)
 		this->GetCharacterMovement()->MaxWalkSpeed = Speed;
 	}
 }
+
+void AMainCharacter::Drop(const FVector2D& Value)
+{
+	const FSlot* Slot = this->Inventory->GetSlotByIndex(this->Inventory->CurrentSlotIndex);
+	if (Slot == nullptr)
+	{
+		// No item is selected, display an error message
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "No item selected");
+		return;
+	}
+	if (Slot->Amount != 0)
+	{
+		// There are some items left, drop one of them
+		this->Inventory->DropItem(this->Inventory->CurrentSlotIndex, 1, GetActorLocation());
+		return;
+	}
+
+	// There are no items left, display an error message
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "No items remaining");
+}

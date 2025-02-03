@@ -156,4 +156,14 @@ public:
 	 * @param Value The input value for sprinting.
 	 */
 	void Sprint(const FVector2D& Value);
+
+	/**
+	 * @brief Called for drop input.
+	 *
+	 * This function is called to handle drop input from the player.
+	 * It updates the character's state based on the input value.
+	 *
+	 * @param Value The input value for dropping.
+	 */
+	void Drop(const FVector2D& Value);
 };
