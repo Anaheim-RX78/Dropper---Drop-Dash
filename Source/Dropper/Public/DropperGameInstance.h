@@ -17,22 +17,23 @@ class DROPPER_API UDropperGameInstance : public UGameInstance
 
 public:
 	/**
-	 * @brief The maximum depth reached in the game.
-	 *
-	 * This property stores the maximum depth that the player has reached
-	 * in the game. It is used for score tracking and display purposes.
-	 */
-	UPROPERTY(EditAnywhere, Category = Score)
-	float MaxDepth = 0;
-
-	/**
 	 * @brief The number of attempts made by the player.
 	 *
 	 * This property stores the number of attempts the player has made
 	 * in the game. It is used for tracking player progress and performance.
 	 */
-	UPROPERTY(EditAnywhere, Category = Score)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Score)
 	int Attempts = 0;
+
+	/**
+	 * @brief The total value of coins collected by the player.
+	 *
+	 * This property stores the total value of coins that the player has collected
+	 * throughout the game.
+	 * It is used for score tracking and display purposes.
+	 */
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Score)
+	int TotalCoinsValue = 0;
 
 	/**
 	 * @brief The identifier of the current level.
@@ -40,7 +41,7 @@ public:
 	 * This property stores the identifier of the current level that the
 	 * player is playing. It is used for level management and loading.
 	 */
-	UPROPERTY(EditAnywhere, Category = Level)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Level)
 	FString CurrentLevelIdentifier = "Level_01";
 
 	/**
