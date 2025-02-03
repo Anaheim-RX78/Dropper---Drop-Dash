@@ -55,6 +55,16 @@ public:
 	int TotalCoins = 0;
 
 	/**
+	 * @brief The total number of Dragon Balls collected by the player.
+	 *
+	 * This property stores the total number of Dragon Balls that the player has collected
+	 * throughout the game.
+	 * It is used for tracking the player's progress in collecting Dragon Balls.
+	 */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	int DragonBallsCount = 0;
+
+	/**
 	 * @brief The identifier of the current level.
 	 *
 	 * This property stores the identifier of the current level that the
