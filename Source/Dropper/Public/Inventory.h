@@ -124,7 +124,7 @@ public:
 	 * @param Amount The quantity of the item to be removed.
 	 * @param Location The location where the removed items will be spawned.
 	 */
-	void DropItem(UItemData* Item, int Amount, const FVector& Location);
+	void DropItem(const UItemData* Item, int Amount, const FVector& Location);
 
 	/**
 	 * @brief Remove an item from the inventory by index.

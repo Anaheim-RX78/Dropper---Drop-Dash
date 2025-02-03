@@ -43,7 +43,7 @@ void UInventory::AddItem(AItemActor* Item, const int Amount)
 	Item->Destroy();
 }
 
-void UInventory::DropItem(UItemData* Item, const int Amount, const FVector& Location)
+void UInventory::DropItem(const UItemData* Item, const int Amount, const FVector& Location)
 {
 	const bool IsACoin = Item->Item->IsChildOf(ACoin::StaticClass());
 	UDropperGameInstance* DropperInstance = Cast<UDropperGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
