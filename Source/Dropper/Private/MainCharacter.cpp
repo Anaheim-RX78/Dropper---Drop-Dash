@@ -43,6 +43,16 @@ void AMainCharacter::BeginPlay()
 void AMainCharacter::Tick(const float DeltaTime)
 {
 	this->Super::Tick(DeltaTime);
+
+	if (GetMovementComponent()->IsFalling())
+	{
+		// if the velocity is less than 100 units per second, set the state falling state to true.
+		this->CanDive = this->GetMovementComponent()->Velocity.Z < 100.0f;
+	}
+	else
+	{
+		this->CanDive = false;
+	}
 }
 
 void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

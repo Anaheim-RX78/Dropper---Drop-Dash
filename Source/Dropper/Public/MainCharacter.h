@@ -108,6 +108,15 @@ public:
 	UPlayerInteractionComponent* GetInteractionComponent() const { return InteractionComponent; }
 
 	/**
+	 * @brief Indicates whether the character was falling in the previous frame.
+	 *
+	 * This property is a boolean flag that indicates whether the character was falling in the previous frame.
+	 * It can be used to detect transitions between falling and non-falling states.
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Movement)
+	bool CanDive = false;
+
+	/**
 	 * @brief Called every frame.
 	 *
 	 * This function is called once per frame and is used to update the character.
