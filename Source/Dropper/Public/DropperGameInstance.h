@@ -26,15 +26,6 @@ public:
 	float ElapsedTime = 0.0f;
 
 	/**
-	 * @brief The number of attempts made by the player.
-	 *
-	 * This property stores the number of attempts the player has made
-	 * in the game. It is used for tracking player progress and performance.
-	 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Score)
-	int Attempts = 0;
-
-	/**
 	 * @brief The total value of coins collected by the player.
 	 *
 	 * This property stores the total value of coins that the player has collected
