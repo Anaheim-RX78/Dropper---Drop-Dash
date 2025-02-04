@@ -13,7 +13,6 @@ void UDropperGameInstance::OnLevelLoaded(const FString LevelIdentifier)
 	else
 	{
 		this->CurrentLevelIdentifier = "Level_01";
-		this->Attempts = 0;
 		this->TotalCoinsValue = 0;
 
 		// Clear the inventory
